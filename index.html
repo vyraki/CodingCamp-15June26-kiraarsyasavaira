@@ -4,114 +4,117 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
 
-    <!-- ───────── TOP BAR (theme toggle) ───────── -->
+    <!-- ───────── TOP BAR ───────── -->
     <div class="topbar">
-      <button class="btn btn-ghost theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+      <div class="topbar-brand">
+        <span class="brand-dot"></span>
+        <span class="brand-name">MyDashboard</span>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
         <span class="theme-icon">🌙</span>
         <span class="theme-label">Dark</span>
       </button>
     </div>
 
-    <!-- ───────── GREETING SECTION ───────── -->
-    <header class="greeting-section">
-      <div class="greeting-content">
+    <!-- ───────── HERO / GREETING ───────── -->
+    <header class="hero">
+      <!-- animated blobs -->
+      <div class="blob blob-1" aria-hidden="true"></div>
+      <div class="blob blob-2" aria-hidden="true"></div>
+      <div class="blob blob-3" aria-hidden="true"></div>
+
+      <div class="hero-content">
         <p id="current-date" class="date-text"></p>
         <h1 id="greeting-text" class="greeting-text"></h1>
         <p id="current-time" class="time-text"></p>
 
         <!-- Custom name row -->
         <div class="name-row" id="name-display-row">
-          <span class="name-label" id="name-display"></span>
+          <span class="name-badge" id="name-display"></span>
           <button class="btn-inline" id="name-edit-btn" aria-label="Edit your name">✏️ Edit name</button>
         </div>
         <div class="name-row name-edit-row hidden" id="name-edit-row">
-          <input
-            type="text"
-            id="name-input"
-            class="text-input name-input"
-            placeholder="Enter your name…"
-            maxlength="40"
-          />
+          <input type="text" id="name-input" class="text-input name-input" placeholder="Enter your name…" maxlength="40" />
           <button class="btn btn-primary btn-sm" id="name-save-btn">Save</button>
           <button class="btn btn-ghost btn-sm" id="name-cancel-btn">Cancel</button>
         </div>
       </div>
     </header>
 
-    <!-- ───────── MAIN CONTENT ───────── -->
+    <!-- ───────── MAIN DASHBOARD ───────── -->
     <main class="dashboard">
 
       <!-- FOCUS TIMER -->
       <section class="card timer-card">
-        <h2 class="card-title">Focus Timer</h2>
-        <div class="timer-display" id="timer-display">25:00</div>
-        <div class="timer-controls">
-          <button class="btn btn-primary" id="timer-start">Start</button>
-          <button class="btn btn-secondary" id="timer-stop">Stop</button>
-          <button class="btn btn-ghost" id="timer-reset">Reset</button>
+        <div class="card-header">
+          <span class="card-icon">⏱</span>
+          <h2 class="card-title">Focus Timer</h2>
         </div>
-        <!-- Custom duration -->
+
+        <div class="timer-ring-wrap" aria-hidden="true">
+          <svg class="timer-ring" viewBox="0 0 120 120">
+            <circle class="ring-track" cx="60" cy="60" r="52"/>
+            <circle class="ring-progress" id="ring-progress" cx="60" cy="60" r="52"/>
+          </svg>
+          <div class="timer-display" id="timer-display">25:00</div>
+        </div>
+
+        <div class="timer-controls">
+          <button class="btn btn-primary" id="timer-start">▶ Start</button>
+          <button class="btn btn-secondary" id="timer-stop">⏸ Stop</button>
+          <button class="btn btn-ghost" id="timer-reset">↺ Reset</button>
+        </div>
+
         <div class="timer-custom">
-          <label for="timer-custom-input" class="custom-label">Custom minutes:</label>
-          <input
-            type="number"
-            id="timer-custom-input"
-            class="text-input timer-custom-input"
-            min="1"
-            max="120"
-            placeholder="25"
-          />
-          <button class="btn btn-ghost btn-sm" id="timer-set-btn">Set</button>
+          <label for="timer-custom-input" class="custom-label">Custom minutes</label>
+          <div class="timer-custom-row">
+            <input type="number" id="timer-custom-input" class="text-input timer-custom-input" min="1" max="120" placeholder="25" />
+            <button class="btn btn-ghost btn-sm" id="timer-set-btn">Set</button>
+          </div>
         </div>
       </section>
 
       <!-- TO-DO LIST -->
       <section class="card todo-card">
-        <h2 class="card-title">To-Do List</h2>
+        <div class="card-header">
+          <span class="card-icon">✅</span>
+          <h2 class="card-title">To-Do List</h2>
+        </div>
+
         <div class="todo-input-row">
-          <input
-            type="text"
-            id="todo-input"
-            class="text-input"
-            placeholder="Add a new task…"
-            maxlength="120"
-          />
-          <button class="btn btn-primary" id="todo-add">Add</button>
+          <input type="text" id="todo-input" class="text-input" placeholder="What needs to be done?" maxlength="120" />
+          <button class="btn btn-primary icon-btn" id="todo-add" aria-label="Add task">+</button>
         </div>
-        <!-- duplicate warning -->
         <p class="duplicate-warning hidden" id="duplicate-warning">⚠️ That task already exists!</p>
-        <!-- sort controls -->
+
         <div class="sort-row">
-          <span class="sort-label">Sort:</span>
-          <button class="btn btn-ghost btn-sm sort-btn active" data-sort="default" id="sort-default">Default</button>
-          <button class="btn btn-ghost btn-sm sort-btn" data-sort="az"      id="sort-az">A → Z</button>
-          <button class="btn btn-ghost btn-sm sort-btn" data-sort="pending" id="sort-pending">Pending first</button>
+          <span class="sort-label">Sort</span>
+          <button class="pill-btn active" data-sort="default" id="sort-default">Default</button>
+          <button class="pill-btn" data-sort="az" id="sort-az">A → Z</button>
+          <button class="pill-btn" data-sort="pending" id="sort-pending">Pending first</button>
         </div>
+
         <ul class="todo-list" id="todo-list"></ul>
       </section>
 
       <!-- QUICK LINKS -->
       <section class="card links-card">
-        <h2 class="card-title">Quick Links</h2>
-        <div class="links-input-row">
-          <input
-            type="text"
-            id="link-name-input"
-            class="text-input"
-            placeholder="Label"
-            maxlength="40"
-          />
-          <input
-            type="url"
-            id="link-url-input"
-            class="text-input"
-            placeholder="https://example.com"
-          />
-          <button class="btn btn-primary" id="link-add">Add</button>
+        <div class="card-header">
+          <span class="card-icon">🔗</span>
+          <h2 class="card-title">Quick Links</h2>
+        </div>
+
+        <div class="links-input-group">
+          <input type="text" id="link-name-input" class="text-input" placeholder="Label" maxlength="40" />
+          <input type="url" id="link-url-input" class="text-input" placeholder="https://example.com" />
+          <button class="btn btn-primary" id="link-add">Add Link</button>
         </div>
         <div class="links-grid" id="links-grid"></div>
       </section>
@@ -121,12 +124,15 @@
     <!-- EDIT TASK MODAL -->
     <div class="modal-overlay" id="edit-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <div class="modal">
-        <h3 class="modal-title" id="modal-title">Edit Task</h3>
+        <div class="modal-header">
+          <h3 class="modal-title" id="modal-title">✏️ Edit Task</h3>
+          <button class="modal-close" id="edit-cancel" aria-label="Close">×</button>
+        </div>
         <input type="text" id="edit-input" class="text-input" maxlength="120" />
         <p class="duplicate-warning hidden" id="edit-duplicate-warning">⚠️ A task with that name already exists!</p>
         <div class="modal-actions">
-          <button class="btn btn-primary" id="edit-save">Save</button>
-          <button class="btn btn-ghost" id="edit-cancel">Cancel</button>
+          <button class="btn btn-ghost" id="edit-cancel-2">Cancel</button>
+          <button class="btn btn-primary" id="edit-save">Save changes</button>
         </div>
       </div>
     </div>
